@@ -65,7 +65,7 @@ function generateWorkflow() {
   currentTasks = tasks; // Store for stories
 
   container.innerHTML = tasks.map((task, i) => `
-    <div class="task-item" style="animation-delay: ${i * 0.1}s" onclick="openStories(${i}, event)">
+    <div class="task-item no-click" style="animation-delay: ${i * 0.1}s">
       <div class="task-info">
         <span class="task-number">${String(i + 1).padStart(2, '0')}</span>
         <span class="task-name">${task}</span>
