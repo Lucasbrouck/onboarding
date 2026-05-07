@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>alo | Onboarding</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <button id="back-btn" class="nav-back" onclick="prevStep()" aria-label="Voltar">
+        <span class="back-arrow">←</span>
+      </button>
+      <main id="quiz-container">
+        <!-- Screens will be injected here or toggled -->
+        <section id="step-1" class="screen active" data-bg="#FFE88E">
+          <div class="content">
+            <h1 class="title">Vamos personalizar a sua experiência com a alo</h1>
+            <button class="btn-primary" onclick="nextStep()">vamos lá</button>
+          </div>
+        </section>
+
+        <section id="step-2" class="screen" data-bg="#FFF7D7">
+          <div class="content">
+            <p class="label">01 · OBJETIVO</p>
+            <h2 class="title">qual seu maior objetivo na alo:</h2>
+            <div class="options-grid">
+              <button class="option-card" onclick="selectPath('estoque')">
+                <span class="option-text">Estoque, CMV e controle da cadeia de suprimentos</span>
+                <span class="arrow">→</span>
+              </button>
+              <button class="option-card" onclick="selectPath('checklists')">
+                <span class="option-text">Checklists e padronização e controle operacional</span>
+                <span class="arrow">→</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Path: Checklists -->
+        <section id="step-checklist-1" class="screen" data-bg="#FFCCEE">
+          <div class="content">
+            <p class="label">02 · COMO FUNCIONA</p>
+            <h2 class="title text-small">
+              Os <span class="highlight-pink">checklists</span> são cadastrados e agendados para o dia e a hora que você quiser e atribuídos a um <span class="highlight-pink">responsável</span> que vai receber as notificações direto pelo celular no whatsapp ou no <span class="highlight-pink">aplicativo</span>
+            </h2>
+            <button class="btn-primary" onclick="nextStep()">entendi</button>
+          </div>
+        </section>
+
+        <section id="step-checklist-2" class="screen" data-bg="#CCFFDD">
+          <div class="content">
+            <p class="label">03 · TAREFAS</p>
+            <h2 class="title">vamos começar com essas 3 tarefas</h2>
+            <div id="checklist-flow-tasks" class="tasks-list">
+              <!-- Dynamically filled -->
+            </div>
+            <button id="btn-checklist-finish" class="btn-primary" style="display: none;" onclick="minimizeOnboarding()">vamos lá</button>
+          </div>
+        </section>
+        <!-- Path: Estoque -->
+        <section id="step-estoque-1" class="screen" data-bg="#CCE5FF">
+          <div class="content">
+            <p class="label">02 · CADEIA DE SUPRIMENTOS</p>
+            <h2 class="title text-small">
+              pra você controlar sua cadeia de suprimentos precisamos controlar sua <span class="highlight-blue">entrada</span> e <span class="highlight-blue">saída</span> de produtos
+            </h2>
+            <button class="btn-primary" onclick="nextStep()">vamos lá</button>
+          </div>
+        </section>
+
+        <section id="step-estoque-2" class="screen" data-bg="#FFF7D7">
+          <div class="content">
+            <p class="label">03 · ENTRADA</p>
+            <h2 class="title">como você vai dar entrada nos produtos?</h2>
+            <div class="options-grid scrollable">
+              <button class="option-card featured" onclick="selectEstoqueOption('entrada', 'assistente')">
+                <div class="option-header">
+                  <span class="option-text">Assistente de recebimento da Alô <span class="tag">RECOMENDADO</span></span>
+                </div>
+                <div class="ratings">
+                  <div class="rating-row"><span>Configuração</span><div class="stars">★★★</div></div>
+                  <div class="rating-row"><span>Facilidade de uso</span><div class="stars">★★☆</div></div>
+                  <div class="rating-row"><span>Consistência (Rotina)</span><div class="stars">★★★</div></div>
+                </div>
+              </button>
+              <button class="option-card" onclick="selectEstoqueOption('entrada', 'whatsapp')">
+                <span class="option-text">Entrada por texto/áudio pelo WhatsApp <span class="arrow">→</span></span>
+                <div class="ratings">
+                  <div class="rating-row"><span>Configuração</span><div class="stars">★★☆</div></div>
+                  <div class="rating-row"><span>Facilidade de uso</span><div class="stars">★★★</div></div>
+                  <div class="rating-row"><span>Consistência (Rotina)</span><div class="stars">★★☆</div></div>
+                </div>
+              </button>
+              <button class="option-card" onclick="selectEstoqueOption('entrada', 'whatsapp')">
+                <span class="option-text">Entrada por foto/XML pelo WhatsApp <span class="arrow">→</span></span>
+                <div class="ratings">
+                  <div class="rating-row"><span>Configuração</span><div class="stars">★☆☆</div></div>
+                  <div class="rating-row"><span>Facilidade de uso</span><div class="stars">★★★</div></div>
+                  <div class="rating-row"><span>Consistência (Rotina)</span><div class="stars">★★★</div></div>
+                </div>
+              </button>
+              <button class="option-card" onclick="selectEstoqueOption('entrada', 'plataforma')">
+                <span class="option-text">Entrada pela plataforma <span class="arrow">→</span></span>
+                <div class="ratings">
+                  <div class="rating-row"><span>Configuração</span><div class="stars">★★★</div></div>
+                  <div class="rating-row"><span>Facilidade de uso</span><div class="stars">★☆☆</div></div>
+                  <div class="rating-row"><span>Consistência (Rotina)</span><div class="stars">★☆☆</div></div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="step-estoque-3" class="screen" data-bg="#CCFFDD">
+          <div class="content">
+            <p class="label">04 · SAÍDA</p>
+            <h2 class="title">e como será a saída de produtos?</h2>
+            <div class="options-grid scrollable">
+              <button class="option-card featured" onclick="selectEstoqueOption('saida', 'contagem')">
+                <div class="option-header">
+                  <span class="option-text">Saída por contagem de estoque <span class="tag">RECOMENDADO</span></span>
+                </div>
+                <p class="option-subtext">Você não precisa dar saída de produtos toda vez que um produto sai</p>
+                <div class="ratings">
+                  <div class="rating-row"><span>Configuração</span><div class="stars">★★☆</div></div>
+                  <div class="rating-row"><span>Facilidade de uso</span><div class="stars">★★★</div></div>
+                  <div class="rating-row"><span>Consistência (Rotina)</span><div class="stars">★★★</div></div>
+                </div>
+              </button>
+              <button class="option-card" onclick="selectEstoqueOption('saida', 'whatsapp')">
+                <span class="option-text">Saída por áudio/texto no WhatsApp <span class="arrow">→</span></span>
+                <div class="ratings">
+                  <div class="rating-row"><span>Configuração</span><div class="stars">★☆☆</div></div>
+                  <div class="rating-row"><span>Facilidade de uso</span><div class="stars">★★★</div></div>
+                  <div class="rating-row"><span>Consistência (Rotina)</span><div class="stars">★★☆</div></div>
+                </div>
+              </button>
+              <button class="option-card" onclick="selectEstoqueOption('saida', 'plataforma')">
+                <span class="option-text">Saída pela plataforma <span class="arrow">→</span></span>
+                <div class="ratings">
+                  <div class="rating-row"><span>Configuração</span><div class="stars">★★★</div></div>
+                  <div class="rating-row"><span>Facilidade de uso</span><div class="stars">★☆☆</div></div>
+                  <div class="rating-row"><span>Consistência (Rotina)</span><div class="stars">★☆☆</div></div>
+                </div>
+              </button>
+              <button class="option-card" onclick="selectEstoqueOption('saida', 'whatsapp')">
+                <span class="option-text">Saída por foto no WhatsApp <span class="arrow">→</span></span>
+                <div class="ratings">
+                  <div class="rating-row"><span>Configuração</span><div class="stars">★☆☆</div></div>
+                  <div class="rating-row"><span>Facilidade de uso</span><div class="stars">★★★</div></div>
+                  <div class="rating-row"><span>Consistência (Rotina)</span><div class="stars">★★☆</div></div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="step-estoque-final" class="screen" data-bg="#FFFFFF">
+          <div class="content">
+            <p class="label">WORKFLOW FINAL</p>
+            <h2 class="title text-small">este é o seu fluxo personalizado na alô:</h2>
+            <div id="workflow-list" class="tasks-list">
+              <!-- Dynamically filled -->
+            </div>
+            <button class="btn-primary" onclick="nextStep()">entendi, ver tarefas!</button>
+          </div>
+        </section>
+
+        <section id="step-estoque-tasks" class="screen" data-bg="#CCFFDD">
+          <div class="content">
+            <p class="label">CONFIGURAÇÃO</p>
+            <h2 class="title text-small">suas primeiras tarefas:</h2>
+            <div id="checklist-tasks" class="tasks-list">
+              <!-- Dynamically filled -->
+            </div>
+            <button id="btn-estoque-finish" class="btn-primary" style="display: none;" onclick="minimizeOnboarding()">vamos lá</button>
+          </div>
+        </section>
+      </main>
+
+      <!-- Stories Overlay -->
+      <div id="stories-overlay" class="stories-overlay">
+        <div class="stories-header">
+          <div id="stories-progress" class="progress-container">
+            <!-- Bars injected here -->
+          </div>
+          <button class="close-stories" onclick="closeStories()">✕</button>
+        </div>
+        <div id="stories-content" class="stories-content">
+          <h2 id="story-title"></h2>
+          <p>Vídeo Tutorial</p>
+        </div>
+      </div>
+
+      <!-- Minimalist toggle tab -->
+      <button id="onboarding-toggle" class="onboarding-tab" onclick="maximizeOnboarding()">
+        <span>ONBOARDING</span>
+      </button>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
